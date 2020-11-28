@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { TextField, Button } from "@material-ui/core";
+import { Formik, Field, Form } from "formik";
+import "./App.css";
 
-function App() {
+const App = () => {
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={(data, { resetForm }) => {
+          console.log("submitted", data);
+          resetForm();
+        }}
+      >
+        {({ values, handleChange, handleBlur, handleSubmit }) => (
+          <Form>
+            <Field type="input" name="firstName" as={TextField} />
+            <Field type="input" name="lastName" as={TextField} />
+            <Field type="input" name="email" as={TextField} />
+            <Field type="input" name="password" as={TextField} />
+            <Button type="submit">Submit</Button>
+            <pre>{JSON.stringify(values, null, 2)}</pre>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
-}
+};
 
 export default App;
